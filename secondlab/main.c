@@ -1,12 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
-#define N 26
+#define N 30
+
+#ifdef _WIN32
+    #include <windows.h>
+#endif
+
+void clear_console()
+{
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
 
 void fill_large_array(int array[])
 {
-    unsigned int x;
-    srand(x);
+    srand(time(NULL));
 
     for (int i = 0; i < N; ++i)
     {
@@ -15,69 +28,99 @@ void fill_large_array(int array[])
     }
 }
 
-void fill_small_array(int array[])
+void fill_small_array(int array[], int size)
 {
-
-    for (int i = 0; i < N; ++i) 
+    for (int i = 0; i < size; ++i) 
     {
         scanf("%d", &array[i]);
     }
 }
 
-void output_array(int array[])
+void output_array(int array[], int size)
 {
 
     printf("Массив:\n");
-    for (int i = 0; i < N; ++i)
+    for (int i = 0; i < size; ++i)
     {
         printf("%d ", array[i]);
     }
-    printf("\n\n");
+    printf("\n");
 }
 
-void find_max_even_num(int array[])
-{
-
-    int temp = 0;
-    for (int i = 0; i < N; i++)
-    {
-        if (array[i] % 2 == 0) 
-        {
-            if (array[i] > temp)
-            {
-                temp = array[i];
-            }
-        }
-    }
-    printf("Максимальное чётное: %d\n", temp);
-}
-
-void find_last_odd_num(int array[])
-{
-    for (int i = N - 1; i >= 0; --i) {
-        if (array[i] % 2 == 1 && array[i] % array[0] != 0)
-        {
-            printf("Последнее нечётное, не кратное первому элементу массива: %d\n", array[i]); 
-            break;
-        }
-    }
-}
 
 int main()
 {
-
-    int array[N];
-
-    if (N > 10)
+    unsigned short isRunning = 1;
+    while (isRunning)
     {
-        fill_large_array(array);
-    }
-    else if (N > 0)
-    {
-        fill_small_array(array);
+        clear_console();
+
+        unsigned short choice;
+
+        printf("Введите ваш выбор\n");
+        printf("1. Создание массива из 26 случайных значений\n");
+        printf("2. Заполнение массива 5 значениями через ввод\n");
+        printf("3. Выход\n");
+
+        printf("Введите ваш выбор: ");
+        scanf(" %hu", &choice);
+
+        switch (choice) 
+        {
+            case 1:
+            {
+                clear_console();
+                int array[N];
+
+                fill_large_array(array);
+                output_array(array, N);
+
+                printf("\nНажмите любую клавишу для продолжения\n");
+                getchar();
+                getchar();
+                break;
+            }
+
+            case 2:
+            {
+                clear_console();
+
+                int array[5];
+                for (int i = 0; i < 5; ++i)
+                {
+                    printf("Введите %d число: ", i+1);
+                    scanf(" %d", &array[i]);
+                }
+
+                output_array(array, 5);
+
+                printf("\nНажмите любую клавишу для продолжения\n");
+                getchar();
+                getchar();
+                break;
+            }
+
+            case 3:
+            {
+                char confirm;
+                printf("Выйти? [y/n]: ");
+                scanf(" %c", &confirm);
+
+                if (confirm == 'y' || confirm == 'Y')
+                {
+                    isRunning = 0;
+                }
+                break;
+            }
+                
+            default:
+                printf("Совпадений не найдено\n");
+                printf("\nНажмите любую клавишу для продолжения\n");
+                getchar();
+                getchar();
+                break;
+        }
     }
 
-    output_array(array);
-    find_max_even_num(array);
-    find_last_odd_num(array);
+    return 0;
 }
