@@ -44,7 +44,6 @@ int output_file(const char* filename, int num_lines)
     return 0;
 }
 
-
 void count_chars_in_line(const char* line, char* result)
 {
     int counts[10] = {0}; // counts[0] для '0', counts[1] для '1', counts[2] для '2' и т.д.
@@ -65,26 +64,50 @@ void count_chars_in_line(const char* line, char* result)
             if (!first) {
                 strcat(result, ", ");
             } 
-            sprintf(temp, "0 %d", counts[0]);
+            sprintf(temp, "%d %d", digit, counts[digit]);
             strcat(result, temp);
             first = 0;
         }
-
+        printf("%s\n", line);
+        printf("%s\n", result);
         result[0] = '\0'; // Очищаем строку результата
     }
+}
+
+void build_result_file(const char* filename_source, const char* filename_result)
+{
+    FILE* source = fopen(filename_source, "r");
+    if (!source) {
+        return;
+    }
+
+    FILE* out = fopen(filename_result, "w");
+    if (!source) {
+        return;
+    }
+
+    fclose(out);
+
+    fclose(source);
 }
 
 int main()
 {
     srand(time(NULL));
 
-    const char filename[] = "source.txt";
-    int error = generate_file(filename, 3);
+    const char filename_source[] = "source.txt";
+    const char filename_result[] = "result.txt";
+
+    int error = generate_file(filename_source, 3);
 
     if (error)
     {
         printf("Не удалось создать файл\n");
     }
 
-    int _error = output_file(filename, 3);
+    int _error = output_file(filename_source, 3);
+    char result[] = "";
+    char line[] = "111222241";
+
+    count_chars_in_line(line, result);
 }
