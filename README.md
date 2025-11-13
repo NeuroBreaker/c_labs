@@ -5,4 +5,4 @@
 | ---------- | ------------------- |
 | firstlab   |                     |
 | secondlab  |                     |
-|            | thirdlab            |
+| thirdlab   |                     |
