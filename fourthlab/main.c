@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-// рекурсивная функция для 1 задания
+// Рекурсивная функция для 1 задания
 int F(int n) {
     if (n < 2) {
         return 1;
@@ -12,7 +12,7 @@ int F(int n) {
     }
 }
 
-// функция для 1 задания
+// Функция для 1 задания
 // Считает количество нечётных цифр в числе number.
 int countOddDigits(int number) {
     if (number == 0) {
@@ -27,6 +27,7 @@ int countOddDigits(int number) {
 }
 
 
+// Функция для 2 задания (Самый оптимальный вариант)
 // a_{n+1} = a_n * ( (n+1) / (n*(2n+1)) * x^2 )
 double calculate_series_recursive(double x, int N) {
     if (N <= 0) return 0.0;
@@ -80,21 +81,21 @@ int main() {
 
     printf("=== 2 Задание ===\n");
     printf("Введите значение x: ");
-    if (scanf("%lf", &x) != 1) {
-        printf("Ошибка ввода x.\n");
-        return 1;
+    while (scanf("%lg", &x) != 1) {
+        printf("Ошибка! Вы ввели не число. Попробуйте снова: ");
+        while (getchar() != '\n');
     }
 
     printf("Введите количество членов N: ");
-    if (scanf("%d", &N) != 1 || N <= 0) {
+    while (scanf("%d", &N) != 1 || N <= 0) {
         printf("Ошибка ввода N (должно быть целое положительное число).\n");
-        return 1;
+        while (getchar() != '\n');
     }
 
     double result_rec = calculate_series_recursive(x, N);
 
     printf("\nРезультат:\n");
-    printf("1. Рекуррентный метод: %.15lf\n", result_rec);
+    printf("1. Рекуррентный метод: %.15lg\n", result_rec);
     
     return 0;
 }
