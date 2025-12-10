@@ -27,7 +27,7 @@ int countOddDigits(int number) {
     return isOdd + countOddDigits(number / 10);
 }
 
-
+// Функция для 2 задания (возврат двойного факториала)
 unsigned long long double_factorial(int n) {
     if (n <= 0) return 1;
     unsigned long long res = 1;
@@ -37,7 +37,7 @@ unsigned long long double_factorial(int n) {
     return res;
 }
 
-// Метод 1: Прямое вычисление (для проверки)
+// Прямой метод подсчёта формулы (Затрачивает много ресурсов)
 double calculate_series_direct(double x, int N) {
     double total_sum = 0.0;
     for (int n = 1; n <= N; n++) {
@@ -50,7 +50,7 @@ double calculate_series_direct(double x, int N) {
     return total_sum;
 }
 
-// Функция для 2 задания (Самый оптимальный вариант)
+// Оптимальный метод решения 2 задания
 // a_{n+1} = a_n * ( (n+1) / (n*(2n+1)) * x^2 )
 double calculate_series_recursive(double x, int N) {
     if (N <= 0) return 0.0;
