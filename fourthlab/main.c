@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 
 // Рекурсивная функция для 1 задания
 int F(int n) {
@@ -26,6 +27,28 @@ int countOddDigits(int number) {
     return isOdd + countOddDigits(number / 10);
 }
 
+
+unsigned long long double_factorial(int n) {
+    if (n <= 0) return 1;
+    unsigned long long res = 1;
+    for (int i = n; i > 0; i -= 2) {
+        res *= i;
+    }
+    return res;
+}
+
+// Метод 1: Прямое вычисление (для проверки)
+double calculate_series_direct(double x, int N) {
+    double total_sum = 0.0;
+    for (int n = 1; n <= N; n++) {
+        double numerator = 2.0 * n * pow(x, 2 * n - 1);
+        
+        unsigned long long denominator = double_factorial(2 * n - 1);
+        
+        total_sum += numerator / (double)denominator;
+    }
+    return total_sum;
+}
 
 // Функция для 2 задания (Самый оптимальный вариант)
 // a_{n+1} = a_n * ( (n+1) / (n*(2n+1)) * x^2 )
@@ -92,11 +115,25 @@ int main() {
         printf("Ошибка ввода N (должно быть целое положительное число).\n");
         while (getchar() != '\n');
     }
-
-    double result_rec = calculate_series_recursive(x, N);
-
-    printf("\nРезультат:\n");
-    printf("1. Рекуррентный метод: %.15lg\n", result_rec);
     
+    double result_rec = calculate_series_recursive(x, N);
+    double result_dir = calculate_series_direct(x, N);
+
+    printf("\nРезультаты:\n");
+    printf("1. Рекуррентный метод: %.15lf\n", result_rec);
+    printf("2. Прямой метод:       %.15lf\n", result_dir);
+    
+    double diff = fabs(result_rec - result_dir);
+    printf("Разница:               %.5lg\n", diff);
+
+    if (diff < 1e-9) {
+        printf("\nВЫВОД: Результаты совпадают.\n");
+    } else {
+        printf("\nВНИМАНИЕ: Результаты различаются!\n");
+        if (N > 15) {
+            printf("При большом N прямой метод мог дать сбой из-за переполнения факториала.\n");
+        }
+    }
+
     return 0;
 }
